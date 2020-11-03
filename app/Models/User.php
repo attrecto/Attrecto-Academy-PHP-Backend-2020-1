@@ -46,4 +46,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Badge','badge_users','user_id','badge_id');
     }
+
+    public function getFirstNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = strtolower($value);
+    }
 }

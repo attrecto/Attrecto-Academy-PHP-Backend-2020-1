@@ -34,4 +34,22 @@ class Handler extends ExceptionHandler
     {
         //
     }
+
+    public function render($request, \Throwable $exception)
+    {
+        if (method_exists($exception, 'getStatusCode')) {
+            $statusCode = $exception->getStatusCode();
+        } else {
+            $statusCode = 500;
+        }
+
+        $response = [
+            'code' => $statusCode,
+            'status' => 'error',
+            'message' => $exception->getMessage(),
+            'trace' => $exception->getTrace(),
+        ];
+
+        return response()->json($response, $statusCode);
+    }
 }
