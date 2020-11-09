@@ -6,7 +6,8 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +16,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
@@ -26,7 +27,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param UserRequest $request
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function store(UserRequest $request)
     {
@@ -44,7 +45,7 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param User $user
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function show(User $user)
     {
@@ -56,7 +57,7 @@ class UserController extends Controller
      *
      * @param UserUpdateRequest $request
      * @param User $user
-     * @return void
+     * @return JsonResponse
      */
     public function update(UserUpdateRequest $request, User $user)
     {
@@ -75,8 +76,8 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
+     * @return JsonResponse
+     * @throws Exception
      */
     public function destroy(User $user)
     {
