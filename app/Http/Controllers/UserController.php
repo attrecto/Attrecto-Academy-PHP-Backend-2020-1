@@ -62,11 +62,16 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $data = $request->only(['email', 'password', 'firstName', 'lastName']);
+        $phoneData = $request->get('phone');
 
         $user->email = $data['email'];
         $user->first_name = $data['firstName'];
         $user->last_name = $data['lastName'];
         $user->save();
+
+        $userPhone = $user->phone()->firstOrCreate(['user_id' => $user->id]);
+        $userPhone->update(['name' => $phoneData['name']]);
+        $userPhone->save();
 
         return response()->json(UserResource::make($user), Response::HTTP_OK);
 

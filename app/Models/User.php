@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function phone()
+    {
+        return $this->hasOne(Phone::class);
+    }
+
     public function badges()
     {
         return $this->belongsToMany('App\Models\Badge','badge_users','user_id','badge_id');
