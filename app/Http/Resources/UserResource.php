@@ -18,7 +18,10 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'email' => $this->email,
             'firstName' => $this->first_name,
-            'lastName' => $this->last_name
+            'lastName' => $this->last_name,
+            'phone' => PhoneResource::make($this->phone),
+            'posts' => PostResource::collection($this->posts),
+            'badges' => BadgeResource::collection($this->badges)
         ];
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
-class UserUpdateRequest extends FormRequest
+class BadgeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +27,8 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email|max:255|unique:users,id,'. $this->id,
-            'firstName' => 'nullable|string',
-            'lastName' => 'nullable|string',
-            'phone.name' => 'nullable|string',
-            'posts' => 'nullable|array',
-            'posts.*.title' => 'required|string',
+            'name' => 'required|string',
+            'description' => 'required|string',
         ];
     }
 
