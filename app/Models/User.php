@@ -47,6 +47,10 @@ class User extends Authenticatable
         return $this->hasOne(Phone::class);
     }
 
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
     public function badges()
     {
         return $this->belongsToMany('App\Models\Badge','badge_users','user_id','badge_id');

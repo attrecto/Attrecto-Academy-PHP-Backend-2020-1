@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Models\Post;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -63,6 +64,7 @@ class UserController extends Controller
     {
         $data = $request->only(['email', 'password', 'firstName', 'lastName']);
         $phoneData = $request->get('phone');
+        $postsData = $request->get('posts');
 
         $user->email = $data['email'];
         $user->first_name = $data['firstName'];
@@ -72,6 +74,13 @@ class UserController extends Controller
         $userPhone = $user->phone()->firstOrCreate(['user_id' => $user->id]);
         $userPhone->update(['name' => $phoneData['name']]);
         $userPhone->save();
+
+        foreach ($postsData as $postData) {
+            Post::create([
+                'user_id' => $user->id,
+                'title' => $postData['title']
+            ]);
+        }
 
         return response()->json(UserResource::make($user), Response::HTTP_OK);
 
