@@ -21,6 +21,9 @@ Route::prefix('users')->group(function () {
     Route::get('/{user}', [UserController::class, 'show']);
     Route::put('/{user}', [UserController::class, 'update']);
     Route::delete('/{user}', [UserController::class, 'destroy']);
+    Route::post('/{user}/badges/sync', [UserController::class, 'syncBadges']);
+    Route::post('/{user}/badges', [UserController::class, 'addBadges']);
+    Route::delete('/{user}/badges', [UserController::class, 'removeBadges']);
 });
 
 Route::prefix('badges')->group(function () {

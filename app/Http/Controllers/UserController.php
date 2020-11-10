@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
@@ -97,5 +98,50 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Add badges for user
+     *
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function addBadges(Request $request, User $user)
+    {
+        $badges = $request->get('badges');
+        $user->badges()->attach($badges);
+
+        return response()->json(UserResource::make($user), Response::HTTP_OK);
+    }
+
+    /**
+     * Remove badges from user
+     *
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function removeBadges(Request $request, User $user)
+    {
+        $badges = $request->get('badges');
+        $user->badges()->detach($badges);
+
+        return response()->json(UserResource::make($user), Response::HTTP_OK);
+    }
+
+    /**
+     * Sync user badges
+     *
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function syncBadges(Request $request, User $user)
+    {
+        $badges = $request->get('badges');
+        $user->badges()->sync($badges);
+
+        return response()->json(UserResource::make($user), Response::HTTP_OK);
     }
 }
